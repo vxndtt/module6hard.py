@@ -2,7 +2,7 @@ import math
 
 class Figure:
     sides_count = 0
-    def __init__(self, __color, __sides: int):
+    def __init__(self, __color, __sides):
         self.__sides = __sides
         self.__color = __color
         self.filled = False
@@ -30,18 +30,18 @@ class Figure:
             return False
 
     def __is_valid_sides(self, *new_sides):
-        for side in new_sides:
-            if side > 0 and self.__sides == new_sides:
-                return True
-            else:
-                return False
+        if len(new_sides) != self.sides_count:
+            for side in new_sides:
+                if side <= 0:
+                    return False
+        return True
 
     def get_sides(self):
         return self.__sides
 
     def __len__(self):
-        perimeter = 5
-        return perimeter
+        per = sum(self.__sides)
+        return per
 
     def set_sides(self, *new_sides):
         if len(new_sides) != self.sides_count:
