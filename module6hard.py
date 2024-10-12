@@ -2,11 +2,10 @@ import math
 
 class Figure:
     sides_count = 0
-    def __init__(self, __color, *__sides: dict):
-        self.__sides = __sides
+    def __init__(self, __color, *__sides: int):
+        self.__sides = list(__sides)
         self.__color = __color
         self.filled = False
-        #self.cube_sides = cube_sides
 
 
     def get_color(self):
@@ -46,14 +45,18 @@ class Figure:
         return per
 
     def set_sides(self, *new_sides):
+        new_sides = list(new_sides)
         if len(new_sides) != self.sides_count:
-            self.__sides == new_sides
-            return self.__sides
-
+            return False
+        else:
+            self.__sides = new_sides
 
 class Circle(Figure):
-    def __init__(self, __color, *__sides: dict, sides_count = 1):
-        super().__init__(__color, *__sides)
+    def __init__(self, __color, side_length):
+        sides_count = 1
+        sides = [side_length] * sides_count
+        super().__init__(__color, *sides)
+        self.sides_count = sides_count
         self.__radius = sides_count / math.pi * 2
 
     def get_square(self):
@@ -61,21 +64,26 @@ class Circle(Figure):
         return square
 
 class Triangle(Figure):
-    def __init__(self, __color, *__sides: dict, sides_count = 3):
-        super().__init__(__color, *__sides)
+    def __init__(self, __color, side_length):
+        sides_count = 3
+        sides = [side_length] * sides_count
+        super().__init__(__color, *sides)
+        self.sides_count = sides_count
 
     def get_square(self):
         per = 0.5 * sum(self.__sides)
         side_1 = self.__sides[0]
         side_2 = self.__sides[1]
         side_3 = self.__sides[2]
-        square = math.sqrt(per * (per - side_1) * (per - side_2) * (per - side_3))
+        square = math.sqrt(per * ((per - side_1) * (per - side_2) * (per - side_3)))
         return square
 
 class Cube(Figure):
-    def __init__(self, __color, *__sides: dict, sides_count = 12):
-        super().__init__(__color, *__sides)
-        cube_sides = [__sides] * sides_count
+    def __init__(self, __color, side_length):
+        sides_count = 12
+        sides = [side_length] * sides_count
+        super().__init__(__color, *sides)
+        self.sides_count = sides_count
 
     def get_volume(self):
         volume = self._Figure__sides[0] ** 3
